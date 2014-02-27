@@ -14,10 +14,6 @@ function WeiboPHP_cURL_Post( $url , $post , $header = NULL , $header_type = '0' 
         $f_post = $f_post . '&' . urlencode( $key ) . '=' . urlencode( $value );
     }
     $f_post = substr( $f_post , 1 );
-    /* ===DEBUG=== */
-    if( DEBUG ){
-        echo $f_post;
-    }
     // set header
     if( $header != NULL ){
         $i = 0;
@@ -26,11 +22,6 @@ function WeiboPHP_cURL_Post( $url , $post , $header = NULL , $header_type = '0' 
             $f_header[ $i ] = "{$key}: {$value}";
             $i ++;
         }
-    }
-    // $f_header[ $i ] = 'Content-Type: application/x-www-form-urlencoded';
-    /* ===DEBUG=== */
-    if( DEBUG ){
-        var_dump( $f_header );
     }
     // setopt
     curl_setopt( $ch , CURLOPT_POST , 1 );
@@ -43,13 +34,6 @@ function WeiboPHP_cURL_Post( $url , $post , $header = NULL , $header_type = '0' 
     }
     curl_setopt( $ch , CURLOPT_FOLLOWLOCATION , 0 );
     curl_setopt( $ch , CURLOPT_HEADER , $header_type );
-    /* ===DEBUG=== */
-    if( DEBUG ){
-        // curl_setopt($ch,CURLOPT_HTTPPROXYTUNNEL,true);
-        curl_setopt( $ch , CURLOPT_PROXY , '127.0.0.1:8888' );
-        // curl_setopt($ch, CURLOPT_PROXYPORT, '8080');
-    }
-    /* !!!DEBUG!!! */
     // exec
     $r = curl_exec( $ch );
     if( curl_errno( $ch ) != 0 ){
@@ -85,13 +69,6 @@ function WeiboPHP_cURL_Get( $url , $get , $header = NULL , $header_type = '0' )
     }
     curl_setopt( $ch , CURLOPT_FOLLOWLOCATION , 0 );
     curl_setopt( $ch , CURLOPT_HEADER , $header_type );
-    /* ===DEBUG=== */
-    if( DEBUG ){
-        // curl_setopt($ch,CURLOPT_HTTPPROXYTUNNEL,true);
-        curl_setopt( $ch , CURLOPT_PROXY , '127.0.0.1:8888' );
-        // curl_setopt($ch, CURLOPT_PROXYPORT, '8080');
-    }
-    /* !!!DEBUG!!! */
     // exec
     $r = curl_exec( $ch );
     if( curl_errno( $ch ) != 0 ){

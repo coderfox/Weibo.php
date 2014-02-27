@@ -5,7 +5,6 @@
  * @author 小傅Fox[<xfox@cotr.me>]
  */
 include_once './curl.php';
-define( 'DEBUG' , true );
 class WeiboEx extends Exception
 {
 
