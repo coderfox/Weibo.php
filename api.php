@@ -4,7 +4,7 @@
  *
  * @author 小傅Fox[<xfox@cotr.me>]
  */
-include_once './curl.php';
+include_once 'curl.php';
 class WeiboEx extends Exception{
 }
 class WeiboPHP{
