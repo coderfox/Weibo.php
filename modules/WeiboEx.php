@@ -1,5 +1,6 @@
 <?php
-class WeiboEx extends Exception
-{
-    
+
+namespace WeiboPHP;
+
+class WeiboEx extends \Exception{
 }
