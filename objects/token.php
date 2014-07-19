@@ -82,4 +82,42 @@ class Token{
             throw new WeiboEx( 'revoke fail', 0 );
         }
     }
+    public function GetUid(){
+        return $this->GetInfo()['uid'];
+    }
+    public function GetAppKey(){
+        return $this->GetInfo()['appkey'];
+    }
+    public function GetCreateTime(){
+        return $this->GetInfo()['create_at'];
+    }
+    public function GetExpireTimeLeft(){
+        return $this->GetInfo()['expire_in'];
+    }
+    public function GetExpireTime(){
+        return $this->GetInfo()['expire_in'] + time();
+    }
+    public function IsExpired(){
+        try {
+            $this->GetInfo();
+        } catch ( WeiboEx $e ) {
+            switch ($e->getCode()) {
+                case 21314 :
+                case 21315 :
+                case 21316 :
+                case 21317 :
+                case 21327 :
+                    {
+                        return true;
+                        break;
+                    }
+                default :
+                    {
+                        throw $e;
+                        break;
+                    }
+            }
+        }
+        return false;
+    }
 }

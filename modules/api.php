@@ -9,14 +9,18 @@ use Curl\Curl;
 class API{
     /**
      * API host
+     *
      * @var string
      */
     public static $host = 'https://api.weibo.com/';
+    public $token;
     /**
      * query a API without automatically add token
-     * @param string $url
-     * @param string $method get/post [case sensitive]
-     * @param string $param
+     *
+     * @param string $url            
+     * @param string $method
+     *            get/post [case sensitive]
+     * @param string $param            
      * @throws \Exception
      * @return array
      */
@@ -48,14 +52,19 @@ class API{
     }
     /**
      * query a API with automatically add token
-     * @param string $url
-     * @param Token $token
-     * @param string $method get/post [case sensitive]
-     * @param string $param
+     *
+     * @param string $url            
+     * @param Token $token            
+     * @param string $method
+     *            get/post [case sensitive]
+     * @param string $param            
      * @throws \Exception
      * @return mixed
      */
     public static function Query($url, $token, $method = 'get', $param = NULL){
+        if ($token->IsExpired()) {
+            throw new WeiboEx( 'token expired', 21319 );
+        }
         $curl = new Curl();
         $tok = $token->GetToken();
         if ($method == 'get') {
@@ -83,5 +92,29 @@ class API{
         } else {
             throw new \Exception( 'invaid method' );
         }
+    }
+    /**
+     * Construct function
+     * 
+     * @param Token $tok
+     *            token
+     * @throws \Exception
+     */
+    public function __construct($tok){
+        if ($tok != null) {
+            $this -> token = $tok;
+        } else {
+            throw new \Exception( 'invaid token', 0 );
+        }
+    }
+    /**
+     * API query
+     * 
+     * @param string $url            
+     * @param string $method            
+     * @param array $param            
+     */
+    public function query($url, $method = 'get', $param = NULL){
+        API::Query( $url, $this -> token, $method, $param );
     }
 }
